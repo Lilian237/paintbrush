@@ -1,0 +1,47 @@
+Steps  for kernel upgrade/compile
+1- Check the current kernel version
+
+#uname –a  or uname –r to check your current version
+2- copy the new kernel package to your system
+
+Go to www.kernel.org to get the latest stable version (use wget to download it to your system)
+3- extract the downloaded packakege.
+Untar it 
+#tar –xvf  <package>
+3- Install depedencies
+
+#cd into the package
+#yum groupinstall “Development Tools”
+#yum install openssl*
+#yum install libncurses5-dev -y
+#yum install ncurses-devel -y
+4- choose all the options you need for your new kernel
+
+#make menuconfig          
+
+and make the changes on the kernel module and save it. It will generate the .config file which contain all the changes to the kernelt
+If you don’t have any changes to make , you can do 
+or #makedefconfig ( if you want the default features)
+
+5- compile the kernel
+#make 
+
+ 
+6- will compile the module
+
+#make    modules 
+
+7- install the module driver     
+#make   modules_install   
+
+8-create the kernel image in the grub.conf file  , create the mapper to communicate with the hardware
+#make install 
+
+9- set the new kernel as default at boot   
+
+go into the file 
+/boot/grub/grub.conf  and make sure default =0 
+This will automatically pick the new kernel at boot .
+
+or if you want to choose it yourself, 
+#reboot and choose the new kernel on the GRUB phase.
